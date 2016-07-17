@@ -1,0 +1,55 @@
+{
+    "name": "edno/browsermob-proxy-php",
+    "description": "PHP wrapper for BrowserMob Proxy",
+    "keywords": ["browsermobproxy", "proxy"],
+    "homepage": "https://github.com/edno/browsermob-proxy-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Greg Heitz",
+            "email": "edno_gh@yahoo.fr"
+        }
+    ],
+    "require": {
+        "php": "^5.5 || ^7.0",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.2",
+        "satooshi/php-coveralls": "^1.0",
+        "phpdocumentor/phpdocumentor": "^2.0",
+        "cvuorinen/phpdoc-markdown-public": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codeception\\Extension\\": "src/"
+        }
+    },
+    "config": {
+      "preferred-install": "dev"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "docker-build": "docker build -t edno/browsermob-proxy tests/_data/docker/",
+        "docker-run": [
+            "docker run -d -p 9090-9189:9090-9189 --name browsermob-proxy edno/browsermob-proxy",
+            "docker ps -a"
+        ],
+        "docker-stop": "docker stop browsermob-proxy",
+        "docker-restart": [
+            "docker restart browsermob-proxy",
+            "sleep 5"
+        ],
+        "docker-remove": [
+            "docker rm -f browsermob-proxy",
+            "docker rmi edno/browsermob-proxy"
+        ],
+        "phpdoc-md": [
+            "rm -rf docs",
+            "git clone https://github.com/edno/browsermob-proxy-php.wiki.git docs",
+            "./vendor/bin/phpdoc --quiet",
+            "mv docs/README.md docs/BrowserMob-Proxy-Documentation.md"
+        ]
+    }
+}
